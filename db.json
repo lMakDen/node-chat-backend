@@ -1,0 +1,180 @@
+{
+  "dialogs": [
+    {
+      "_id": "5560a53159be43b162cf7f0d63754399",
+      "text": "Мы все свидетельствуем Вам глубочайшее наше почтение и целуем Ваши ручки, дражайший папенька: Михайла, Федор, Варвара и Андрюша",
+      "unreaded": 5,
+      "created_at": "Mon Mar 01 2020 22:20:34",
+      "user": {
+        "_id": "5560a53159be43b162cf7f0d63754399",
+        "fullname": "Фёдор Достоевский",
+        "avatar": null
+      }
+    },
+    {
+      "_id": "a4c60af9818b27bf4bb717003602eec4",
+      "text": "Мы все свидетельствуем Вам глубочайшее наше почтение и целуем Ваши ручки, дражайший папенька: Михайла, Федор, Варвара и Андрюша",
+      "unreaded": 5,
+      "created_at": "Mon Mar 01 2020 22:20:34",
+      "user": {
+        "_id": "a4c60af9818b27bf4bb717003602eec4",
+        "fullname": "йарва",
+        "avatar": null
+      }
+    },
+    {
+      "_id": "5560a53159be43b162cf7f0d63754398",
+      "text": "Привет, как твои дела?",
+      "isReaded": true,
+      "created_at": "Mon Mar 02 2020 22:23:34",
+      "user": {
+        "_id": "5560a53159be43b162cf7f0d63754398",
+        "fullname": "Тарас",
+        "avatar": "https://download-cs.net/steam/avatars/3415.jpg"
+      }
+    },
+    {
+      "_id": "5560a53159be43b162cf7f0d63754397",
+      "text": "Привет, как твои дела?",
+      "isReaded": true,
+      "created_at": "Mon Mar 02 2020 22:23:34",
+      "user": {
+        "_id": "5560a53159be43b162cf7f0d63754397",
+        "fullname": "Алла Пугачева",
+        "avatar": "https://download-cs.net/steam/avatars/3415.jpg"
+      }
+    },
+    {
+      "_id": "5560a53159be43b162cf7f0d63754396",
+      "text": "Привет, как твои дела?",
+      "isReaded": true,
+      "created_at": "Mon Mar 02 2020 22:23:34",
+      "user": {
+        "_id": "5560a53159be43b162cf7f0d63754396",
+        "fullname": "Агата Кристи",
+        "avatar": "https://download-cs.net/steam/avatars/3415.jpg"
+      }
+    },
+    {
+      "_id": "5560a53159be43b162cf7f0d63754395",
+      "text": "Привет, как твои дела?",
+      "isReaded": true,
+      "created_at": "Mon Mar 02 2020 22:23:34",
+      "user": {
+        "_id": "5560a53159be43b162cf7f0d63754395",
+        "fullname": "Дан Балан",
+        "avatar": "https://download-cs.net/steam/avatars/3415.jpg"
+      }
+    },
+    {
+      "_id": "5560a53159be43b162cf7f0d63754394",
+      "text": "Привет, как твои дела?",
+      "isReaded": true,
+      "created_at": "Mon Mar 02 2020 22:23:34",
+      "user": {
+        "_id": "5560a53159be43b162cf7f0d63754394",
+        "fullname": "Едуард Петкович",
+        "avatar": "https://download-cs.net/steam/avatars/3415.jpg"
+      }
+    },
+    {
+      "_id": "5560a53159be43b162cf7f0d63754393",
+      "text": "Привет, как твои дела?",
+      "isReaded": true,
+      "created_at": "Mon Mar 02 2020 22:23:34",
+      "user": {
+        "_id": "5560a53159be43b162cf7f0d63754393",
+        "fullname": "Иммобиле",
+        "avatar": "https://download-cs.net/steam/avatars/3415.jpg"
+      }
+    },
+    {
+      "_id": "5560a53159be43b162cf7f0d63754392",
+      "text": "Привет, как твои дела?",
+      "isReaded": true,
+      "created_at": "Mon Mar 02 2020 22:23:34",
+      "user": {
+        "_id": "5560a53159be43b162cf7f0d63754392",
+        "fullname": "Алан Тьюринг",
+        "avatar": "https://download-cs.net/steam/avatars/3415.jpg"
+      }
+    },
+    {
+      "_id": "5560a53159be43b162cf7f0d63754391",
+      "text": "Привет, как твои дела?",
+      "isReaded": true,
+      "created_at": "Mon Mar 02 2020 22:23:34",
+      "user": {
+        "_id": "5560a53159be43b162cf7f0d63754391",
+        "fullname": "Иван Петрович",
+        "avatar": "https://download-cs.net/steam/avatars/3415.jpg"
+      }
+    }
+  ],
+  "messages" : [
+    {
+      "dialog": "5560a53159be43b162cf7f0d63754399",
+      "text": "Салам, Брут! Чё, как, уничтожил флот галлов?",
+      "date": "Sat Feb 29 2020 19:10:28",
+      "user": {
+        "_id": "a4c60af9818b27bf4bb717003602eec4",
+        "fullname": "йарва",
+        "avatar": "https://download-cs.net/steam/avatars/3415.jpg"
+      }
+    },
+    {
+      "dialog": "5560a53159be43b162cf7f0d63754399",
+      "text": "Hello world?",
+      "date": "Sat Feb 29 2020 19:15:28",
+      "isMe": true,
+      "isReaded": true,
+      "user": {
+        "_id": "a4c60af9818b27bf4bb717003602eec4",
+        "fullname": "йарва",
+        "avatar": "https://download-cs.net/steam/avatars/3412.jpg"
+      }
+    },
+    {
+      "dialog": "5560a53159be43b162cf7f0d63754399",
+      "text": "Салам, Брут! Чё, как, уничтожил флот галлов?",
+      "date": "Sat Feb 29 2020 19:10:28",
+      "user": {
+        "_id": "a4c60af9818b27bf4bb717003602eec4",
+        "fullname": "йарва",
+        "avatar": "https://download-cs.net/steam/avatars/3415.jpg"
+      }
+    },
+    {
+      "dialog": "5560a53159be43b162cf7f0d63754399",
+      "text": "Салам, Брут! Чё, как, уничтожил флот галлов?",
+      "date": "Sat Feb 29 2020 19:10:28",
+      "user": {
+        "_id": "a4c60af9818b27bf4bb717003602eec4",
+        "fullname": "йарва",
+        "avatar": "https://download-cs.net/steam/avatars/3415.jpg"
+      }
+    },
+    {
+      "dialog": "5560a53159be43b162cf7f0d63754399",
+      "text": "Салам, Брут! Чё, как, уничтожил флот галлов?",
+      "date": "Sat Feb 29 2020 19:10:28",
+      "user": {
+        "_id": "a4c60af9818b27bf4bb717003602eec4",
+        "fullname": "йарва",
+        "avatar": null
+      }
+    },
+    {
+      "dialog": "5560a53159be43b162cf7f0d63754399",
+      "text": "Hello world?",
+      "date": "Sat Feb 29 2020 19:15:28",
+      "isMe": true,
+      "isReaded": true,
+      "user": {
+        "_id": "a4c60af9818b27bf4bb717003602eec4",
+        "fullname": "йарва",
+        "avatar": "https://download-cs.net/steam/avatars/3412.jpg"
+      }
+    }
+  ]
+}
