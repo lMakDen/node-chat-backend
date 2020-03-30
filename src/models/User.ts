@@ -14,17 +14,17 @@ export interface IUser extends Document {
 const UserSchema = new Schema({
   email: {
     type: String,
-    required: 'Email address is required',
+    require: 'Email address is required',
     validate: [ validator.isEmail, 'Invalid email' ],
     unique: true
   },
   fullName: {
       type: String,
-      required: 'Fullname address is required',
+      require: 'Fullname address is required',
   },
   password: {
       type: String,
-      required: 'Password address is required',
+      require: 'Password address is required',
   },
   confirmed: {
       type: Boolean,
