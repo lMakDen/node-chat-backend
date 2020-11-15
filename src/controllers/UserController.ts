@@ -6,6 +6,7 @@ class UserController {
 
   index(req: express.Request, res: express.Response){
     const id: string = req.params.id;
+    console.log('req.params.id', req.params.id)
     UserModel.findById(id, (err, user) => {
       if(err) {
         return res.status(404).json({
