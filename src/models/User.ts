@@ -1,12 +1,13 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import validator from 'validator';
+import { generatePasswordHash } from '../utils';
 
 export interface IUser extends Document {
   email: string;
   fullName: string;
   password: string;
   confirmed: boolean;
-  avatar: string;
+  avatar?: string;
   confirm_hash?: string;
   last_seen?: Date;
 }
@@ -20,7 +21,7 @@ const UserSchema = new Schema({
   },
   fullName: {
       type: String,
-      require: 'Fullname address is required',
+      require: 'FullName address is required',
   },
   password: {
       type: String,
@@ -32,11 +33,26 @@ const UserSchema = new Schema({
   },
   avatar: String,
   confirm_hash: String,
-  last_seen: Date
+  last_seen: {
+    type: Date,
+    default: new Date()
+  }
 }, {
   timestamps: true,
   }
 )
+
+UserSchema.pre('save', function(next) {
+  const user: any = this;
+  if(!user.isModified('password')) return next()
+  generatePasswordHash(user.password)
+  .then((hash) => {
+    user.password = hash
+    next()
+  }).catch((err) => {
+    next(err)
+  })
+})
 
 const UserModel = mongoose.model<IUser>('User', UserSchema);
 
