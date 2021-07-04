@@ -1,10 +1,18 @@
 import express from 'express';
+// @ts-ignore
+import io from 'socket.io';
+
 import { MessageModel } from '../models';
 
 
 class MessageController {
+  private io: io.Server;
 
-  index(req: express.Request, res: express.Response){
+  constructor(io: io.Server) {
+    this.io = io;
+  }
+
+  index = (req: express.Request, res: express.Response) => {
     const dialogId: any = req.query.dialog;
     MessageModel.find({ dialog: dialogId })
     .populate(['dialog'])
@@ -18,26 +26,34 @@ class MessageController {
     });
   }
 
-  create(req : express.Request, res : express.Response) {
-    const userId = '5e6e64627c51b003b03a4ca0'
+  create = (req : any, res : express.Response) => {
+    const userId = req.user._id
     const postData = {
       text: req.body.text,
       user: userId,
       dialog: req.body.dialog_id,
     };
-    console.log('postData', postData)
+
     const message = new MessageModel(postData);
 
     message.save()
     .then((obj : any) => {
-      res.json(obj)
+      obj.populate('dialog', (err: any, message: any) => {
+        if (err) {
+          return res.status(500).json({
+            message: err,
+          });
+        }
+        res.json(message)
+        this.io.emit('SERVER:NEW_MESSAGE', message)
+      })
     })
     .catch((error) => {
       res.json(error)
     })
   }
 
-  remove(req : express.Request, res : express.Response) {
+  remove = (req : express.Request, res : express.Response) => {
     const id: string = req.params.id;
     MessageModel.findOneAndRemove({ _id: id })
     .then(message => {

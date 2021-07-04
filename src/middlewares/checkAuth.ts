@@ -1,13 +1,4 @@
-import express from 'express';
 import { verifyJWToken } from '../utils'
-import { IUser } from '../models/User'
-
-// interface RequestCustom extends express.Request {
-//   user?: IUser;
-//   headers: {
-//     token?: string;
-//   };
-// }
 
 
 export default (
@@ -21,8 +12,8 @@ export default (
   }
 
   const token = req.headers.token;
-  verifyJWToken(token).then(user => {
-    req.user = user;
+  verifyJWToken(token).then((user: any) => {
+    req.user = user.data._doc;
     next()
   })
     .catch(() => {

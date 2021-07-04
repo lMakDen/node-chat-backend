@@ -1,16 +1,23 @@
 import express from 'express';
 import bcrypt from "bcrypt";
+// @ts-ignore
+import io from 'socket.io';
+
 import { UserModel } from '../models';
 import { IUser } from '../models/User';
-import {createJWToken, generatePasswordHash} from '../utils';
+import {createJWToken} from '../utils';
 import { validationResult } from 'express-validator';
 
 
 class UserController {
+  private io: io.Server;
 
-  index(req: express.Request, res: express.Response){
+  constructor(io: io.Server) {
+    this.io = io;
+  }
+
+  index = (req: express.Request, res: express.Response) => {
     const id: string = req.params.id;
-    console.log('req.params.id', req.params.id)
     UserModel.findById(id, (err, user) => {
       if(err) {
         return res.status(404).json({
@@ -21,7 +28,19 @@ class UserController {
     })
   }
 
-  create(req : express.Request, res : express.Response) {
+  getMe = (req: any, res: express.Response) => {
+    const id: string = req.user._id;
+    UserModel.findById(id, (err, user) => {
+      if(err) {
+        return res.status(404).json({
+          message: 'not found'
+        })
+      }
+      res.json(user)
+    })
+  }
+
+  create = (req : express.Request, res : express.Response) => {
     const postData = {
       email: req.body.email,
       fullName: req.body.fullName,
@@ -39,7 +58,7 @@ class UserController {
     })
   }
 
-  remove(req : express.Request, res : express.Response) {
+  remove = (req : express.Request, res : express.Response) => {
     const id: string = req.body.id;
     UserModel.findOneAndRemove({ _id: id }, (err, user) => {
       if(err) {
@@ -53,7 +72,7 @@ class UserController {
     })
   }
 
-  login(req : express.Request, res : express.Response) {
+  login = (req : express.Request, res : express.Response) => {
     const postData = {
       email: req.body.email,
       password: req.body.password,
