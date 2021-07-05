@@ -84,7 +84,7 @@ class UserController {
     }
 
     UserModel.findOne({ email: postData.email }, (err, user: IUser) => {
-      if(err) {
+      if(err || !user) {
         return res.status(404).json({
           message: 'User not found'
         })
