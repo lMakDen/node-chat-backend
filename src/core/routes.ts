@@ -2,9 +2,11 @@ import express from 'express';
 import bodyParser from "body-parser";
 // @ts-ignore
 import io from 'socket.io';
+import cors from 'cors';
 import {checkAuth, updateLastSeen} from "../middlewares";
 import {DialogCtrl, MessageCtrl, UserCtrl} from "../controllers";
-import {loginValidation} from "../utils/validators";
+import {loginValidation, registerValidation} from "../utils/validators";
+
 
 export default (app: express.Express, io: io.Server) => {
 
@@ -13,14 +15,17 @@ export default (app: express.Express, io: io.Server) => {
   const MessageController = new MessageCtrl(io);
 
   app.use(bodyParser.json());
-  app.use(updateLastSeen);
+  app.use(cors())
   app.use(checkAuth);
+  app.use(updateLastSeen);
 
-  app.get('/user/:me', UserController.getMe);
+  app.get('/user/me', UserController.getMe);
+  app.get('/user/verify', UserController.verify);
   app.get('/user/:id', UserController.index);
-  app.post('/user/registration', UserController.create);
+
+  app.post('/user/signUp', registerValidation, UserController.create);
   app.delete('/user/remove', UserController.remove);
-  app.post('/user/login', loginValidation, UserController.login);
+  app.post('/user/signIn', loginValidation, UserController.login);
 
   app.get('/dialogs', DialogController.index);
   app.post('/dialogs', DialogController.create);

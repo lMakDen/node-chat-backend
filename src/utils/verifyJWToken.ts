@@ -6,7 +6,6 @@ export default (token: string) => {
       if(err || !decodedToken) {
         return reject(err)
       }
-
       resolve(decodedToken)
     })
   })

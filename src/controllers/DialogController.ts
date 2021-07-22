@@ -14,6 +14,12 @@ class DialogController {
     const authorId: any = req.user._id;
     DialogModel.find({ author: authorId })
     .populate(['author', 'partner'])
+    .populate({
+      path: 'lastMessage',
+      populate: {
+        path: 'user'
+      }
+    })
     .exec(function(err : any, dialogs : any) {
       if (err) {
         return res.status(404).json({

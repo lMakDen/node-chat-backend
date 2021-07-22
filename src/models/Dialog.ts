@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document } from 'mongoose';
-import validator from 'validator';
 
 export interface IDialog extends Document {
   author: {

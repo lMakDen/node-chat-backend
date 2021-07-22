@@ -28,6 +28,38 @@ class UserController {
     })
   }
 
+  verify = (req : express.Request, res : express.Response) => {
+    const { hash } = req.query;
+
+    if(!hash) {
+      return res.status(422).json({ errors: 'Invalid hash' })
+    }
+
+    UserModel.findOne({ confirm_hash: hash }, (err, user) => {
+      if(err || !user) {
+        return res.status(404).json({
+          status: 'error',
+          message: 'Hash not found'
+        })
+      }
+
+      user.confirmed = true
+
+      user.save(() => {
+        if(err) {
+          return res.status(404).json({
+            status: 'error',
+            message: err
+          })
+        }
+        return res.json({
+          status: 'success',
+          message: 'Аккаунт успешно подтвержден!'
+        })
+      })
+    })
+  }
+
   getMe = (req: any, res: express.Response) => {
     const id: string = req.user._id;
     UserModel.findById(id, (err, user) => {
@@ -46,15 +78,22 @@ class UserController {
       fullName: req.body.fullName,
       password: req.body.password,
     };
+
+    // const errors = validationResult(req)
+    // if(!errors.isEmpty()){
+    //   return res.status(422).json({ errors: errors.array() })
+    // }
     const user = new UserModel(postData);
+
     user.save()
     .then((obj : any) => {
-      console.log('then')
       res.json(obj)
     })
     .catch((error) => {
-      console.log('catch')
-      res.json(error)
+      res.status(500).json({
+        status: "error",
+        message: error
+      })
     })
   }
 
@@ -78,14 +117,14 @@ class UserController {
       password: req.body.password,
     }
 
-    const errors = validationResult(req)
-    if(!errors.isEmpty()){
-      return res.status(422).json({ errors: errors.array() })
-    }
-
+    // const errors = validationResult(req)
+    // if(!errors.isEmpty()){
+    //   return res.status(422).json({ errors: errors.array() })
+    // }
     UserModel.findOne({ email: postData.email }, (err, user: IUser) => {
       if(err || !user) {
         return res.status(404).json({
+          status: "error",
           message: 'User not found'
         })
       }

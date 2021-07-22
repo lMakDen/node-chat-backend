@@ -7,17 +7,20 @@ export default (
   next: any,
 ) => {
 
-  if(req.path === '/user/login' || req.path === '/user/registration') {
+  if(
+    req.path === '/user/signIn' ||
+    req.path === '/user/signUp' ||
+    req.path === '/user/verify'
+  ) {
     return next()
   }
 
   const token = req.headers.token;
   verifyJWToken(token).then((user: any) => {
     req.user = user.data._doc;
-    next()
-  })
-    .catch(() => {
-      res.status(403).json({
+    return next()
+  }).catch(() => {
+      return res.status(403).json({
         message: 'Invalid auth token provided.'
       })
     })
