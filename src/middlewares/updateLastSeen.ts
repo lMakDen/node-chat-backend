@@ -7,13 +7,19 @@ export default (
   req: any,
   res: express.Response,
   next: express.NextFunction) => {
-  UserModel.findOneAndUpdate(
-    { _id: req.user._id },
-    {
-      last_seen: new Date(),
-    },
-    { new: true },
-    () => {}
+  if(!req.user) {
+    return next()
+  }
+
+  if(req.user) {
+    UserModel.findOneAndUpdate(
+      { _id: req.user._id },
+      {
+        last_seen: new Date(),
+      },
+      { new: true },
+      () => {}
     );
+  }
   next()
 }

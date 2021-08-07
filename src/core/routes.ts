@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from "body-parser";
 // @ts-ignore
 import io from 'socket.io';
+// @ts-ignore
 import cors from 'cors';
 import {checkAuth, updateLastSeen} from "../middlewares";
 import {DialogCtrl, MessageCtrl, UserCtrl} from "../controllers";

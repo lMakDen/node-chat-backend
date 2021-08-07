@@ -11,8 +11,8 @@ class DialogController {
     this.io = io;
   }
   index = (req: any, res: express.Response) => {
-    const authorId: any = req.user._id;
-    DialogModel.find({ author: authorId })
+    const userId: any = req.user._id;
+    DialogModel.find().or([{ author: userId }, { partner: userId }])
     .populate(['author', 'partner'])
     .populate({
       path: 'lastMessage',
@@ -32,7 +32,8 @@ class DialogController {
 
   create = (req : express.Request, res : express.Response) => {
     const postData = {
-      author: req.body.author,
+      // @ts-ignore
+      author: req.user._id,
       partner: req.body.partner,
     };
     const dialog = new DialogModel(postData);
@@ -45,7 +46,14 @@ class DialogController {
         dialog: dialogObj._id,
       })
       message.save().then(() => {
-        res.json(dialogObj)
+        dialogObj.lastMessage = message._id
+        dialog.save().then(() => {
+          res.json(dialogObj)
+          this.io.emit('SERVER:DIALOG_CREATED', {
+            ...postData,
+            dialog: dialogObj
+          })
+        })
       }).catch((error) => {
         res.json(error)
       })
