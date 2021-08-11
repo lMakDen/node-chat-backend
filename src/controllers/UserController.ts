@@ -143,5 +143,21 @@ class UserController {
 
     })
   }
+
+  findUsers = (req: express.Request, res: express.Response) => {
+    const query: string = req.query.query;
+    UserModel.find()
+    .or([
+      { fullName: new RegExp(query, 'i') },
+      { email: new RegExp(query, 'i') }
+    ])
+    .then((users: any) => res.json(users))
+    .catch((err: any) => {
+      return res.status(404).json({
+        status: 'error',
+        message: err
+      })
+    })
+  }
 }
 export default UserController;

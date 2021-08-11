@@ -42,7 +42,8 @@ class DialogController {
     .then((dialogObj: any) => {
       const message = new MessageModel({
         text: req.body.text,
-        user: req.body.author,
+        // @ts-ignore
+        user: req.user._id,
         dialog: dialogObj._id,
       })
       message.save().then(() => {

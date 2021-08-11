@@ -22,6 +22,7 @@ export default (app: express.Express, io: io.Server) => {
 
   app.get('/user/me', UserController.getMe);
   app.get('/user/verify', UserController.verify);
+  app.get('/user/find', UserController.findUsers);
   app.get('/user/:id', UserController.index);
 
   app.post('/user/signUp', registerValidation, UserController.create);
