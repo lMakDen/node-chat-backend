@@ -6,6 +6,7 @@ import io from 'socket.io';
 import { UserModel } from '../models';
 import { IUser } from '../models/User';
 import {createJWToken} from '../utils';
+import HttpException from '../utils/types';
 import { validationResult } from 'express-validator';
 
 
@@ -152,7 +153,7 @@ class UserController {
       { email: new RegExp(query, 'i') }
     ])
     .then((users: any) => res.json(users))
-    .catch((err: any) => {
+    .catch((err: HttpException) => {
       return res.status(404).json({
         status: 'error',
         message: err

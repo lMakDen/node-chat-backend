@@ -3,6 +3,7 @@ import express from 'express';
 import io from 'socket.io';
 
 import {MessageModel, DialogModel, UserModel} from '../models';
+import HttpException from '../utils/types';
 
 
 class MessageController {
@@ -12,11 +13,27 @@ class MessageController {
     this.io = io;
   }
 
-  index = (req: express.Request, res: express.Response) => {
+  index = (req: any, res: express.Response) => {
     const dialogId: any = req.query.dialog;
+    const userId: any = req.user._id
+
+    MessageModel.updateMany({
+      dialog: dialogId, user: { $ne: userId }
+    },
+      {
+        $set: { isRead: true }
+      },
+        (err: HttpException) => {
+          if(err) {
+            return res.status(500).json({
+              status: 'error',
+              message: err
+            })
+          }})
+
     MessageModel.find({ dialog: dialogId })
     .populate(['dialog', 'user'])
-    .exec(function(err : any, messages : any) {
+    .exec(function(err : HttpException, messages : any) {
       if (err) {
         return res.status(404).json({
           message: 'Messages not found',
@@ -38,7 +55,7 @@ class MessageController {
 
     message.save()
     .then((obj : any) => {
-      obj.populate(['dialog', 'user'], (err: any, message: any) => {
+      obj.populate(['dialog', 'user'], (err: HttpException, message: any) => {
         if (err) {
           return res.status(500).json({
             status: 'error',

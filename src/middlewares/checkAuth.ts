@@ -1,10 +1,11 @@
+import express from "express";
 import { verifyJWToken } from '../utils'
 
 
 export default (
   req: any,
-  res: any,
-  next: any,
+  res: express.Response,
+  next: express.NextFunction,
 ) => {
 
   if(

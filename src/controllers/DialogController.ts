@@ -2,6 +2,7 @@ import express from 'express';
 // @ts-ignore
 import io from 'socket.io';
 import { DialogModel, MessageModel } from '../models';
+import HttpException from '../utils/types';
 
 
 class DialogController {
@@ -20,7 +21,7 @@ class DialogController {
         path: 'user'
       }
     })
-    .exec(function(err : any, dialogs : any) {
+    .exec(function(err : HttpException, dialogs : any) {
       if (err) {
         return res.status(404).json({
           message: 'Dialogs not found',

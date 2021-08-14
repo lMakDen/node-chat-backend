@@ -5,15 +5,17 @@ import io from 'socket.io';
 // @ts-ignore
 import cors from 'cors';
 import {checkAuth, updateLastSeen} from "../middlewares";
-import {DialogCtrl, MessageCtrl, UserCtrl} from "../controllers";
+import {DialogCtrl, MessageCtrl, UserCtrl, FileCtrl} from "../controllers";
 import {loginValidation, registerValidation} from "../utils/validators";
 
+import uploader from './uploader'
 
 export default (app: express.Express, io: io.Server) => {
 
   const UserController = new UserCtrl(io);
   const DialogController = new DialogCtrl(io);
   const MessageController = new MessageCtrl(io);
+  const FileController = new FileCtrl();
 
   app.use(bodyParser.json());
   app.use(cors())
@@ -36,4 +38,6 @@ export default (app: express.Express, io: io.Server) => {
   app.get('/messages', MessageController.index);
   app.post('/messages', MessageController.create);
   app.delete('/messages', MessageController.remove);
+
+  app.post('/file', uploader.single('image'), FileController.create);
 }
