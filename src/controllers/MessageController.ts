@@ -2,7 +2,7 @@ import express from 'express';
 // @ts-ignore
 import io from 'socket.io';
 
-import { MessageModel, DialogModel } from '../models';
+import {MessageModel, DialogModel, UserModel} from '../models';
 
 
 class MessageController {
@@ -70,21 +70,81 @@ class MessageController {
   }
 
   remove = (req : express.Request, res : express.Response) => {
-    const id: string = req.params.id;
-    MessageModel.findOneAndRemove({ _id: id })
-    .then(message => {
-      if(message) {
-        res.json({
-          message: 'Message was deleted'
+    const id: string = req.query.id;
+    // @ts-ignore
+    const userId: string = req.user._id;
+
+    MessageModel.findById(id, (err, message: any) => {
+      if(err) {
+        return res.status(404).json({
+          status: 'error',
+          message: 'Message not found'
+        })
+      }
+
+      if(message.user.toString() === userId) {
+        message.remove().then(() => {
+          const dialogId = message.dialog;
+
+          MessageModel.findOne(
+            { dialog: dialogId },
+            {},
+            { sort: { createdAt : -1 } },
+            (err, lastMessage:any) => {
+              if (err) {
+                res.status(500).json({
+                  status: "error",
+                  message: err,
+                });
+              }
+
+              // DialogModel.findOneAndUpdate(
+              //   { _id: dialogId },
+              //   { lastMessage: lastMessage._id },
+              //   { upsert: true },
+              //   (err) => {
+              //     if (err) {
+              //       return res.status(500).json({
+              //         status: 'error',
+              //         message: err,
+              //       });
+              //     }
+              //   }
+              // )
+              //TODO посмотреть возможно можно заюзать findOneAndUpdate
+              DialogModel.findById(dialogId, (err, dialog) => {
+                if (err) {
+                  res.status(500).json({
+                    status: "error",
+                    message: err,
+                  });
+                }
+
+                if (!dialog) {
+                  return res.status(404).json({
+                    status: "not found",
+                    message: err,
+                  });
+                }
+
+                // @ts-ignore
+                dialog.lastMessage = lastMessage._id;
+                dialog.save();
+              });
+            }
+          );
+        })
+        return res.json({
+          status: "success",
+          message: "Message deleted",
+        });
+      } else {
+        return res.status(403).json({
+          status: 'error',
+          message: 'Have not permission'
         })
       }
     })
-    .catch(() => {
-      res.json({
-        message: 'Message not found'
-      })
-    })
   }
-
 }
 export default MessageController;

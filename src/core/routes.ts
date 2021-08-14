@@ -35,5 +35,5 @@ export default (app: express.Express, io: io.Server) => {
 
   app.get('/messages', MessageController.index);
   app.post('/messages', MessageController.create);
-  app.delete('/messages/:id', MessageController.remove);
+  app.delete('/messages', MessageController.remove);
 }
