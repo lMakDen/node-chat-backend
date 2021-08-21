@@ -32,7 +32,7 @@ class MessageController {
           }})
 
     MessageModel.find({ dialog: dialogId })
-    .populate(['dialog', 'user'])
+    .populate(['dialog', 'user', 'attachments'])
     .exec(function(err : HttpException, messages : any) {
       if (err) {
         return res.status(404).json({
@@ -49,13 +49,14 @@ class MessageController {
       text: req.body.text,
       user: userId,
       dialog: req.body.dialog_id,
+      attachments: req.body.attachments,
     };
 
     const message = new MessageModel(postData);
 
     message.save()
     .then((obj : any) => {
-      obj.populate(['dialog', 'user'], (err: HttpException, message: any) => {
+      obj.populate(['dialog', 'user', 'attachments'], (err: HttpException, message: any) => {
         if (err) {
           return res.status(500).json({
             status: 'error',

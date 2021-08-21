@@ -30,9 +30,11 @@ const MessageSchema = new Schema({
       type: Boolean,
       default: false,
     },
+    attachments: [{ type: Schema.Types.ObjectId, ref: 'File' }],
   },
   {
     timestamps: true,
+    usePushEach: true,
   }
 )
 
